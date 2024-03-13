@@ -38,49 +38,85 @@
     public int StartAngle = 30;
     public string Size { get; set; } = "12px";
 
-    // public IEnumerable<PieData> PieChartPoints
-    // {
-    //     get
-    //     {
-    //         return [ new PieData(Browser: "Chrome", Users: 59.28, DataLabelMappingName: "Chrome: 59.28%"),
-    // new PieData(Browser: "UC Browser", Users: 4.37, DataLabelMappingName: "UC Browser: 4.37%"),
-    // new PieData(Browser: "Internet Explorer", Users: 6.12, DataLabelMappingName: "Internet Explorer: 6.12%"),
-    // new PieData(Browser: "Sogou Explorer", Users: 1.37, DataLabelMappingName: "Sogou Explorer: 1.37%"),
-    // new PieData(Browser: "QQ", Users: 3.96, DataLabelMappingName: "QQ: 3.96%"),
-    // new PieData(Browser: "Safari", Users: 4.73, DataLabelMappingName: "Safari: 4.73%"),
-    // new PieData(Browser: "Opera", Users: 3.12, DataLabelMappingName: "Opera: 3.12%"),
-    // new PieData(Browser: "Edge", Users: 7.48, DataLabelMappingName: "Edge: 7.48%"),
-    // new PieData(Browser: "Others", Users: 9.57, DataLabelMappingName: "Others: 9.57%")];
-    //     }
-    // }
 
+    //
+    //  "pure" IEnumerable will crash the system
+    //
     public IEnumerable<PieData> PieChartPoints
     {
         get
         {
-            yield return new PieData(Browser: "Chrome", Users: 59.28, DataLabelMappingName: "Chrome: 59.28%");
-            yield return new PieData(Browser: "UC Browser", Users: 4.37, DataLabelMappingName: "UC Browser: 4.37%");
-   yield return new PieData(Browser: "Internet Explorer", Users: 6.12, DataLabelMappingName: "Internet Explorer: 6.12%");
-   yield return new PieData(Browser: "Sogou Explorer", Users: 1.37, DataLabelMappingName: "Sogou Explorer: 1.37%");
-   yield return new PieData(Browser: "QQ", Users: 3.96, DataLabelMappingName: "QQ: 3.96%");
-   yield return new PieData(Browser: "Safari", Users: 4.73, DataLabelMappingName: "Safari: 4.73%");
-   yield return new PieData(Browser: "Opera", Users: 3.12, DataLabelMappingName: "Opera: 3.12%");
-   yield return new PieData(Browser: "Edge", Users: 7.48, DataLabelMappingName: "Edge: 7.48%");
-   yield return new PieData(Browser: "Others", Users: 9.57, DataLabelMappingName: "Others: 9.57%");
+            yield return new PieData("Chrome", 59.28, "Chrome: 59.28%");
+            yield return new PieData("UC",  4.37, "UC 4.37%");
+            yield return new PieData("Internet Explorer", 6.12, "Internet Explorer: 6.12%");
+            yield return new PieData("Sogou Explorer", 1.37, "Sogou Explorer: 1.37%");
+            yield return new PieData("QQ", 3.96, "QQ: 3.96%");
+            yield return new PieData("Safari", 4.73, "Safari: 4.73%");
+            yield return new PieData("Opera", 3.12, "Opera: 3.12%");
+            yield return new PieData("Edge", 7.48, "Edge: 7.48%");
+            yield return new PieData("Others", 9.57, "Others: 9.57%");
         }
     }
-//     public List<PieData> PieChartPoints { get; set; } = new List<PieData>
-// {
-//         new PieData { Browser = "Chrome", Users = 59.28, DataLabelMappingName = "Chrome: 59.28%"},
-//         new PieData { Browser = "UC Browser", Users = 4.37, DataLabelMappingName = "UC Browser: 4.37%"},
-//         new PieData { Browser = "Internet Explorer", Users = 6.12, DataLabelMappingName = "Internet Explorer: 6.12%"},
-//         new PieData { Browser = "Sogou Explorer", Users = 1.37, DataLabelMappingName = "Sogou Explorer: 1.37%"},
-//         new PieData { Browser = "QQ", Users = 3.96, DataLabelMappingName = "QQ: 3.96%"},
-//         new PieData { Browser = "Safari", Users = 4.73, DataLabelMappingName = "Safari: 4.73%"},
-//         new PieData { Browser = "Opera", Users = 3.12, DataLabelMappingName = "Opera: 3.12%"},
-//         new PieData { Browser = "Edge", Users = 7.48, DataLabelMappingName = "Edge: 7.48%"},
-//         new PieData { Browser = "Others", Users = 9.57, DataLabelMappingName = "Others: 9.57%"},
-//     };
+
+    //
+    //  IEnumerable without an underlying collection type will crash the system
+    //
+
+    // public IEnumerable<PieData> PieChartPoints
+    // {
+    //     get
+    //     {
+    //         return [new PieData("Chrome", 59.28, "Chrome: 59.28%"),
+    //      new PieData("UC",  4.37, "UC 4.37%"),
+    //      new PieData("Internet Explorer", 6.12, "Internet Explorer: 6.12%"),
+    //      new PieData("Sogou Explorer", 1.37, "Sogou Explorer: 1.37%"),
+    //      new PieData("QQ", 3.96, "QQ: 3.96%"),
+    //      new PieData("Safari", 4.73, "Safari: 4.73%"),
+    //      new PieData("Opera", 3.12, "Opera: 3.12%"),
+    //      new PieData("Edge", 7.48, "Edge: 7.48%"),
+    //      new PieData("Others", 9.57, "Others: 9.57%")];
+    //     }
+    // }
+
+
+    //
+    //  IEnumerable with underlying list is OK
+    //
+    // public IEnumerable<PieData> PieChartPoints
+    // {
+    //     get
+    //     {
+    //         return new List<PieData>() { new PieData("Chrome", 59.28, "Chrome: 59.28%"),
+    //      new PieData("UC",  4.37, "UC 4.37%"),
+    //      new PieData("Internet Explorer", 6.12, "Internet Explorer: 6.12%"),
+    //      new PieData("Sogou Explorer", 1.37, "Sogou Explorer: 1.37%"),
+    //      new PieData("QQ", 3.96, "QQ: 3.96%"),
+    //      new PieData("Safari", 4.73, "Safari: 4.73%"),
+    //      new PieData("Opera", 3.12, "Opera: 3.12%"),
+    //      new PieData("Edge", 7.48, "Edge: 7.48%"),
+    //      new PieData("Others", 9.57, "Others: 9.57%")};
+    //     }
+    // }
+
+
+    //
+    //  Original code from the site
+    //
+
+
+    //     public List<PieData> PieChartPoints { get; set; } = new List<PieData>
+    // {
+    //         new PieData ("Chrome", 59.28, "Chrome: 59.28%"),
+    //         new PieData ("UC Browser", 4.37, "UC Browser: 4.37%"),
+    //         new PieData ("Internet Explorer", 6.12, "Internet Explorer: 6.12%"),
+    //         new PieData ("Sogou Explorer", 1.37, "Sogou Explorer: 1.37%"),
+    //         new PieData ("QQ", 3.96, "QQ: 3.96%"),
+    //         new PieData ("Safari", 4.73, "Safari: 4.73%"),
+    //         new PieData ("Opera", 3.12, "Opera: 3.12%"),
+    //         new PieData ("Edge", 7.48, "Edge: 7.48%"),
+    //         new PieData ("Others", 9.57, "Others: 9.57%"),
+    //     };
+
     protected override void OnInitialized()
     {
         Theme = Theme.Bootstrap5;
@@ -93,13 +129,20 @@
         ConnectorLength = "10px";
         Size = "8px";
     }
-    // public class PieData
-    // {
-    //     public string Browser { get; set; }
-    //     public double Users { get; set; }
-    //     public string DataLabelMappingName { get; set; }
-    // }
+    public class PieData
+    {
+        public PieData(string browser, double users, string dataLabelMappingName)
+        {
+            Browser = browser;
+            Users = users;
+            DataLabelMappingName = dataLabelMappingName;
+        }
+        public string Browser { get; set; }
 
-    public record PieData(string Browser, double Users, string DataLabelMappingName);
+        public double Users { get; set; }
+        public string DataLabelMappingName { get; set; }
+    }
+
+    // public record PieData(string Browser, double Users, string DataLabelMappingName);
 
 }
